@@ -3,149 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClaudeForge - MCP Server Proxy for AI Agents</title>
-    <meta name="description" content="Secure MCP server proxy with web-based management interface. Control tool permissions and manage connections between AI agents and MCP servers.">
+    <title>ClaudeForge - MCP Server Proxy</title>
+    <meta name="description" content="Secure MCP server proxy with web-based management. Control tool permissions between AI agents and MCP servers.">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <span class="logo">⚡</span>
-                <span class="brand-name">ClaudeForge</span>
-            </div>
+        <div class="nav-container">
+            <a href="/" class="logo">ClaudeForge</a>
             <div class="nav-links">
                 <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#security">Security</a>
-                <a href="#docs">Documentation</a>
-                <a href="#contact" class="btn-nav">Get Started</a>
-            </div>
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+                <a href="#how-it-works">Setup</a>
+                <a href="https://github.com/jpeggdev/claudeforge">GitHub</a>
+                <a href="#docs">Docs</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    The Secure Bridge Between<br>
-                    <span class="gradient-text">AI Agents and MCP Servers</span>
-                </h1>
-                <p class="hero-description">
-                    ClaudeForge is a powerful proxy that sits between your AI agents and MCP servers, 
-                    providing granular control over tool permissions through an intuitive web interface.
-                </p>
-                <div class="hero-actions">
-                    <a href="#get-started" class="btn btn-primary">Get Started</a>
-                    <a href="#docs" class="btn btn-secondary">View Documentation</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Open Source</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">Zero</span>
-                        <span class="stat-label">Configuration Hassle</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">Full</span>
-                        <span class="stat-label">Permission Control</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="architecture-diagram">
-                    <div class="diagram-element agent">AI Agent</div>
-                    <div class="diagram-arrow">→</div>
-                    <div class="diagram-element forge">ClaudeForge</div>
-                    <div class="diagram-arrow">→</div>
-                    <div class="diagram-element servers">
-                        <div class="server-item">MCP Server 1</div>
-                        <div class="server-item">MCP Server 2</div>
-                        <div class="server-item">MCP Server 3</div>
-                    </div>
-                </div>
+        <div class="hero-container">
+            <h1 class="hero-title">
+                MCP Server Proxy<br>for AI Agents
+            </h1>
+            <p class="hero-subtitle">
+                Control and manage connections between AI agents and MCP servers<br>
+                with granular permissions and a web-based interface.
+            </p>
+            <div class="hero-actions">
+                <a href="https://github.com/jpeggdev/claudeforge" class="btn-primary">Get Started →</a>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why ClaudeForge?</h2>
-                <p>Everything you need to manage MCP server connections securely and efficiently</p>
-            </div>
+        <div class="section-container">
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
-                    <h3>Granular Permissions</h3>
-                    <p>Control exactly which tools and capabilities are available to each AI agent connection</p>
+                    <h3>Permission Control</h3>
+                    <p>Granular control over which tools and capabilities are available to each AI agent.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎛️</div>
-                    <h3>Web Management Interface</h3>
-                    <p>Intuitive dashboard to configure, monitor, and manage all your MCP server connections</p>
+                    <h3>Web Interface</h3>
+                    <p>Manage all your MCP server connections through an intuitive dashboard.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Zero Downtime Updates</h3>
-                    <p>Update permissions and configurations without interrupting active agent connections</p>
+                    <h3>Live Updates</h3>
+                    <p>Update permissions without interrupting active connections.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Real-time Monitoring</h3>
-                    <p>Track usage, performance metrics, and debug issues with comprehensive logging</p>
+                    <h3>Multi-Server</h3>
+                    <p>Connect to multiple MCP servers with unified management.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Multi-Server Support</h3>
-                    <p>Connect to multiple MCP servers simultaneously with unified management</p>
+                    <h3>Monitoring</h3>
+                    <p>Real-time metrics and comprehensive logging for debugging.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
                     <h3>High Performance</h3>
-                    <p>Minimal latency overhead with efficient request routing and caching</p>
+                    <p>Minimal latency with efficient request routing.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How It Works</h2>
-                <p>Get up and running in minutes with our simple setup process</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Install ClaudeForge</h3>
-                    <p>Deploy the proxy server using Docker or run directly with Node.js</p>
-                    <pre><code>docker run -p 8080:8080 claudeforge/proxy</code></pre>
+    <section id="how-it-works" class="setup">
+        <div class="section-container">
+            <h2>Quick Setup</h2>
+            <div class="setup-steps">
+                <div class="setup-step">
+                    <div class="step-header">
+                        <span class="step-number">1</span>
+                        <h3>Install</h3>
+                    </div>
+                    <pre><code>curl -sSL https://github.com/jpeggdev/claudeforge/blob/main/install-remote.sh | bash</code></pre>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Configure MCP Servers</h3>
-                    <p>Add your MCP servers through the web interface and set permissions</p>
+                <div class="setup-step">
+                    <div class="step-header">
+                        <span class="step-number">2</span>
+                        <h3>Configure</h3>
+                    </div>
+                    <p>Add MCP servers and set permissions via the web interface at localhost:8080</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Connect Your Agent</h3>
-                    <p>Point your AI agent to the ClaudeForge proxy endpoint</p>
+                <div class="setup-step">
+                    <div class="step-header">
+                        <span class="step-number">3</span>
+                        <h3>Connect</h3>
+                    </div>
                     <pre><code>{
   "mcpServers": {
     "proxy": {
-      "url": "http://localhost:8080"
+      "type": "http",
+      "url": "http://localhost:8080/mcp"
     }
   }
 }</code></pre>
@@ -154,103 +109,28 @@
         </div>
     </section>
 
-    <!-- Security Section -->
-    <section id="security" class="security">
-        <div class="container">
-            <div class="section-header">
-                <h2>Built with Security First</h2>
-                <p>Enterprise-grade security features to protect your infrastructure</p>
-            </div>
-            <div class="security-features">
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Tool Whitelisting</h4>
-                        <p>Explicitly control which tools can be accessed by agents</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Request Validation</h4>
-                        <p>All requests are validated and sanitized before forwarding</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Audit Logging</h4>
-                        <p>Complete audit trail of all tool invocations and changes</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Rate Limiting</h4>
-                        <p>Protect against abuse with configurable rate limits</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Authentication</h4>
-                        <p>Secure authentication for both agents and administrators</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <span class="check-icon">✓</span>
-                    <div>
-                        <h4>Encrypted Communications</h4>
-                        <p>TLS support for all connections</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section id="get-started" class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Take Control of Your MCP Servers?</h2>
-                <p>Join developers who are securing their AI agent connections with ClaudeForge</p>
-                <div class="cta-actions">
-                    <a href="https://github.com/claudeforge/claudeforge" class="btn btn-primary">View on GitHub</a>
-                    <a href="#docs" class="btn btn-secondary">Read Documentation</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
-        <div class="container">
+    <footer class="footer">
+        <div class="footer-container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="logo">⚡</span>
-                    <span class="brand-name">ClaudeForge</span>
-                    <p>The secure MCP server proxy for AI agents</p>
+                <div class="footer-section">
+                    <h4>ClaudeForge</h4>
+                    <p>MCP Server Proxy</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Resources</h4>
+                <div class="footer-section">
+                    <a href="https://github.com/jpeggdev/claudeforge">GitHub</a>
                     <a href="#docs">Documentation</a>
-                    <a href="https://github.com/claudeforge/claudeforge">GitHub</a>
-                    <a href="#api">API Reference</a>
+                    <a href="https://github.com/jpeggdev/claudeforge/issues">Issues</a>
                 </div>
-                <div class="footer-links">
-                    <h4>Community</h4>
-                    <a href="https://github.com/claudeforge/claudeforge/issues">Issues</a>
-                    <a href="https://github.com/claudeforge/claudeforge/discussions">Discussions</a>
-                    <a href="#contributing">Contributing</a>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p>Created by Jeff Pegg</p>
-                    <a href="mailto:jpeggdev@gmail.com">jpeggdev@gmail.com</a>
+                <div class="footer-section">
+                    <a href="mailto:jpeggdev@gmail.com">Contact</a>
+                    <a href="https://github.com/jpeggdev/claudeforge/blob/main/LICENSE">License</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ClaudeForge. All rights reserved.</p>
+                <p>© 2025 ClaudeForge by Jeff Pegg</p>
             </div>
         </div>
     </footer>
