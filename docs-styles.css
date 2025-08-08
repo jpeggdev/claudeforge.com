@@ -1,0 +1,337 @@
+/* Documentation-specific styles */
+.docs-hero {
+    padding: 120px 24px 60px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.docs-hero-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.docs-hero h1 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+}
+
+.docs-hero p {
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+/* Documentation layout */
+.docs-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 48px;
+    padding: 48px 24px;
+    min-height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+.docs-sidebar {
+    position: sticky;
+    top: 84px;
+    height: fit-content;
+    max-height: calc(100vh - 108px);
+    overflow-y: auto;
+}
+
+.docs-nav h3 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin: 24px 0 12px;
+}
+
+.docs-nav h3:first-child {
+    margin-top: 0;
+}
+
+.docs-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.docs-nav li {
+    margin: 4px 0;
+}
+
+.docs-nav a {
+    display: block;
+    padding: 6px 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.docs-nav a:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.docs-nav a.active {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    font-weight: 500;
+}
+
+/* Main content */
+.docs-content {
+    max-width: 800px;
+}
+
+.docs-section {
+    margin-bottom: 64px;
+    scroll-margin-top: 84px;
+}
+
+.docs-section h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+}
+
+.docs-section h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    letter-spacing: -0.5px;
+}
+
+.docs-section h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+}
+
+.docs-section p {
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.docs-section ul,
+.docs-section ol {
+    margin: 16px 0;
+    padding-left: 24px;
+    line-height: 1.8;
+}
+
+.docs-section li {
+    margin: 8px 0;
+}
+
+/* Code blocks */
+.docs-section pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+    position: relative;
+}
+
+.docs-section code {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.docs-section :not(pre) > code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+/* Architecture diagram */
+.architecture-diagram {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    padding: 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* Tables */
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+}
+
+.docs-table th {
+    background: var(--bg-secondary);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.docs-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+}
+
+.docs-table tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* API endpoints */
+.api-endpoint {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 24px 0;
+}
+
+.api-endpoint h4 {
+    margin-top: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.method {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.method.get {
+    background: #10b981;
+    color: white;
+}
+
+.method.post {
+    background: #3b82f6;
+    color: white;
+}
+
+.method.delete {
+    background: #ef4444;
+    color: white;
+}
+
+.method.put {
+    background: #f59e0b;
+    color: white;
+}
+
+/* Notes and warnings */
+.docs-note {
+    background: #fef3c7;
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 24px 0;
+}
+
+.docs-note strong {
+    color: #92400e;
+}
+
+.docs-warning {
+    background: #fee2e2;
+    border: 1px solid #f87171;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 24px 0;
+}
+
+.docs-warning strong {
+    color: #991b1b;
+}
+
+/* Troubleshooting items */
+.troubleshoot-item {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 16px 0;
+}
+
+.troubleshoot-item h4 {
+    margin-top: 0;
+    color: var(--text-primary);
+}
+
+.troubleshoot-item ul {
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .docs-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    
+    .docs-sidebar {
+        position: relative;
+        top: 0;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .docs-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .docs-hero h1 {
+        font-size: 32px;
+    }
+    
+    .docs-section h2 {
+        font-size: 24px;
+    }
+    
+    .docs-section h3 {
+        font-size: 20px;
+    }
+    
+    .docs-table {
+        font-size: 12px;
+    }
+    
+    .docs-table th,
+    .docs-table td {
+        padding: 8px;
+    }
+    
+    .architecture-diagram {
+        font-size: 11px;
+        padding: 16px;
+    }
+}

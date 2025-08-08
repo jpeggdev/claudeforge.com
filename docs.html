@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - ClaudeForge</title>
+    <meta name="description" content="Complete documentation for ClaudeForge MCP Server Proxy">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="docs-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">ClaudeForge</a>
+            <div class="nav-links">
+                <a href="/#features">Features</a>
+                <a href="/#how-it-works">Setup</a>
+                <a href="https://github.com/jpeggdev/claudeforge">GitHub</a>
+                <a href="/docs.html" class="active">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Hero -->
+    <section class="docs-hero">
+        <div class="docs-hero-container">
+            <h1>Documentation</h1>
+            <p>Everything you need to know about ClaudeForge</p>
+        </div>
+    </section>
+
+    <!-- Documentation Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Getting Started</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#quick-install">Quick Install</a></li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#first-steps">First Steps</a></li>
+                </ul>
+                
+                <h3>Core Concepts</h3>
+                <ul>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="#transport-types">Transport Types</a></li>
+                    <li><a href="#permissions">Permission System</a></li>
+                    <li><a href="#session-management">Session Management</a></li>
+                </ul>
+                
+                <h3>Configuration</h3>
+                <ul>
+                    <li><a href="#config-file">Config File</a></li>
+                    <li><a href="#server-config">Server Configuration</a></li>
+                    <li><a href="#environment-vars">Environment Variables</a></li>
+                    <li><a href="#web-interface">Web Interface</a></li>
+                </ul>
+                
+                <h3>API Reference</h3>
+                <ul>
+                    <li><a href="#rest-api">REST API</a></li>
+                    <li><a href="#websocket-api">WebSocket API</a></li>
+                    <li><a href="#mcp-protocol">MCP Protocol</a></li>
+                </ul>
+                
+                <h3>Deployment</h3>
+                <ul>
+                    <li><a href="#system-services">System Services</a></li>
+                    <li><a href="#docker">Docker</a></li>
+                    <li><a href="#production">Production Setup</a></li>
+                    <li><a href="#security">Security</a></li>
+                </ul>
+                
+                <h3>Advanced</h3>
+                <ul>
+                    <li><a href="#custom-servers">Custom Servers</a></li>
+                    <li><a href="#monitoring">Monitoring</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Overview -->
+            <section id="overview" class="docs-section">
+                <h2>Overview</h2>
+                <p>ClaudeForge is a powerful orchestration platform for Model Context Protocol (MCP) servers. It acts as a transparent proxy between MCP clients and multiple MCP servers, providing sophisticated management capabilities through a web interface.</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Transparent Proxying</strong> - Clients connect as if to a single MCP server</li>
+                    <li><strong>Multiple Transport Support</strong> - stdio, SSE, and WebSocket protocols</li>
+                    <li><strong>Permission Management</strong> - Granular control over tool access</li>
+                    <li><strong>Web Dashboard</strong> - Real-time monitoring and configuration</li>
+                    <li><strong>Session Management</strong> - Track and control client connections</li>
+                    <li><strong>Hot Reload</strong> - Update configurations without downtime</li>
+                </ul>
+            </section>
+
+            <!-- Quick Install -->
+            <section id="quick-install" class="docs-section">
+                <h2>Quick Install</h2>
+                <p>Get ClaudeForge running in under a minute with our automated installer:</p>
+                
+                <pre><code class="language-bash"># Using curl
+curl -sSL https://raw.githubusercontent.com/jpeggdev/claudeforge/main/install-remote.sh | bash
+
+# Using wget
+wget -qO- https://raw.githubusercontent.com/jpeggdev/claudeforge/main/install-remote.sh | bash</code></pre>
+                
+                <p>The installer will:</p>
+                <ul>
+                    <li>Check and install Node.js 18+ if needed</li>
+                    <li>Download ClaudeForge to <code>~/claudeforge</code></li>
+                    <li>Install all dependencies</li>
+                    <li>Build the TypeScript project</li>
+                    <li>Set up as a user service (starts on login)</li>
+                    <li>Configure the web interface on port 8080</li>
+                </ul>
+                
+                <div class="docs-note">
+                    <strong>Note:</strong> After installation, access the web interface at <code>http://localhost:8080</code>
+                </div>
+            </section>
+
+            <!-- Architecture -->
+            <section id="architecture" class="docs-section">
+                <h2>Architecture</h2>
+                <p>ClaudeForge uses a modular architecture designed for flexibility and scalability:</p>
+                
+                <pre class="architecture-diagram">┌─────────────┐
+│  MCP Client │
+└──────┬──────┘
+       │ HTTP/SSE
+       ▼
+┌─────────────────────────────┐
+│       ClaudeForge Proxy      │
+│  ┌────────────────────────┐  │
+│  │   Permission Manager   │  │
+│  └────────────────────────┘  │
+│  ┌────────────────────────┐  │
+│  │    Server Manager      │  │
+│  └────────────────────────┘  │
+│  ┌────────────────────────┐  │
+│  │     Log Manager        │  │
+│  └────────────────────────┘  │
+└───────────┬─────────────────┘
+            │
+    ┌───────┴────────┬────────┬────────┐
+    ▼                ▼        ▼        ▼
+┌──────┐        ┌──────┐ ┌──────┐ ┌──────┐
+│Server│        │Server│ │Server│ │Server│
+│(stdio)│       │(SSE) │ │(WS)  │ │...   │
+└──────┘        └──────┘ └──────┘ └──────┘</pre>
+
+                <h3>Core Components</h3>
+                
+                <h4>Proxy Server</h4>
+                <p>The main server that handles incoming MCP client connections and routes requests to appropriate backend servers.</p>
+                
+                <h4>Server Manager</h4>
+                <p>Manages lifecycle of connected MCP servers, including connection, disconnection, and health monitoring.</p>
+                
+                <h4>Permission Manager</h4>
+                <p>Controls access to tools and resources based on configurable policies and session-specific rules.</p>
+                
+                <h4>Web Server</h4>
+                <p>Provides the management interface and REST API for configuration and monitoring.</p>
+            </section>
+
+            <!-- Configuration -->
+            <section id="configuration" class="docs-section">
+                <h2>Configuration</h2>
+                
+                <h3 id="config-file">Configuration File</h3>
+                <p>ClaudeForge uses a JSON configuration file to define servers and settings:</p>
+                
+                <pre><code class="language-json">{
+  "port": 3000,
+  "webPort": 8080,
+  "defaultPermissions": "allow",
+  "servers": [
+    {
+      "id": "filesystem",
+      "name": "Filesystem Server",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"],
+      "transport": "stdio",
+      "env": {
+        "DEBUG": "true"
+      }
+    },
+    {
+      "id": "github",
+      "name": "GitHub Server",
+      "endpoint": "http://localhost:3001/mcp/sse",
+      "transport": "sse",
+      "apiKey": "${GITHUB_API_KEY}"
+    }
+  ]
+}</code></pre>
+
+                <h3>Server Configuration Options</h3>
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>id</code></td>
+                            <td>string</td>
+                            <td>Unique identifier for the server</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>name</code></td>
+                            <td>string</td>
+                            <td>Display name in web interface</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>transport</code></td>
+                            <td>string</td>
+                            <td>"stdio", "sse", or "websocket"</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><code>command</code></td>
+                            <td>string</td>
+                            <td>Command to execute (stdio only)</td>
+                            <td>For stdio</td>
+                        </tr>
+                        <tr>
+                            <td><code>args</code></td>
+                            <td>array</td>
+                            <td>Command arguments (stdio only)</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><code>endpoint</code></td>
+                            <td>string</td>
+                            <td>Server URL (SSE/WebSocket only)</td>
+                            <td>For SSE/WS</td>
+                        </tr>
+                        <tr>
+                            <td><code>env</code></td>
+                            <td>object</td>
+                            <td>Environment variables</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><code>apiKey</code></td>
+                            <td>string</td>
+                            <td>API key for authentication</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Transport Types -->
+            <section id="transport-types" class="docs-section">
+                <h2>Transport Types</h2>
+                
+                <h3>stdio Transport</h3>
+                <p>Launches a subprocess and communicates via standard input/output:</p>
+                <pre><code class="language-json">{
+  "transport": "stdio",
+  "command": "node",
+  "args": ["./my-server.js"],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}</code></pre>
+                
+                <h3>SSE Transport</h3>
+                <p>Connects to a server using Server-Sent Events:</p>
+                <pre><code class="language-json">{
+  "transport": "sse",
+  "endpoint": "http://localhost:3001/mcp/sse",
+  "headers": {
+    "Authorization": "Bearer ${API_TOKEN}"
+  }
+}</code></pre>
+                
+                <h3>WebSocket Transport</h3>
+                <p>Connects via WebSocket protocol:</p>
+                <pre><code class="language-json">{
+  "transport": "websocket",
+  "endpoint": "ws://localhost:3002/mcp",
+  "reconnect": true,
+  "reconnectDelay": 5000
+}</code></pre>
+            </section>
+
+            <!-- Permissions -->
+            <section id="permissions" class="docs-section">
+                <h2>Permission System</h2>
+                <p>ClaudeForge provides granular control over tool access with a flexible permission system.</p>
+                
+                <h3>Permission Levels</h3>
+                <ul>
+                    <li><strong>Read</strong> - View tool information</li>
+                    <li><strong>Write</strong> - Modify tool parameters</li>
+                    <li><strong>Execute</strong> - Run the tool</li>
+                </ul>
+                
+                <h3>Default Policies</h3>
+                <pre><code class="language-json">{
+  "defaultPermissions": "allow",  // or "deny"
+  "permissions": {
+    "filesystem": {
+      "read_file": ["read", "execute"],
+      "write_file": ["deny"],
+      "delete_file": ["deny"]
+    }
+  }
+}</code></pre>
+                
+                <h3>Session-Based Permissions</h3>
+                <p>Permissions can be modified per session through the web interface or API:</p>
+                <pre><code class="language-javascript">// Update permissions via API
+fetch('/api/sessions/abc123/permissions', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    'filesystem::read_file': true,
+    'filesystem::write_file': false
+  })
+});</code></pre>
+            </section>
+
+            <!-- REST API -->
+            <section id="rest-api" class="docs-section">
+                <h2>REST API Reference</h2>
+                
+                <h3>Server Management</h3>
+                
+                <div class="api-endpoint">
+                    <h4><span class="method get">GET</span> /api/servers</h4>
+                    <p>List all configured servers and their status</p>
+                    <pre><code class="language-json">// Response
+{
+  "servers": [
+    {
+      "id": "filesystem",
+      "name": "Filesystem Server",
+      "status": "connected",
+      "transport": "stdio",
+      "tools": ["read_file", "write_file"],
+      "resources": [],
+      "prompts": []
+    }
+  ]
+}</code></pre>
+                </div>
+                
+                <div class="api-endpoint">
+                    <h4><span class="method post">POST</span> /api/servers/:id/restart</h4>
+                    <p>Restart a specific server</p>
+                    <pre><code class="language-json">// Response
+{
+  "success": true,
+  "message": "Server restarted successfully"
+}</code></pre>
+                </div>
+                
+                <div class="api-endpoint">
+                    <h4><span class="method delete">DELETE</span> /api/servers/:id</h4>
+                    <p>Stop and remove a server</p>
+                </div>
+                
+                <h3>Session Management</h3>
+                
+                <div class="api-endpoint">
+                    <h4><span class="method get">GET</span> /api/sessions</h4>
+                    <p>List all active sessions</p>
+                    <pre><code class="language-json">// Response
+{
+  "sessions": [
+    {
+      "id": "session-123",
+      "clientInfo": "Claude Desktop",
+      "connectedAt": "2024-01-15T10:30:00Z",
+      "permissions": {
+        "filesystem::read_file": true,
+        "filesystem::write_file": false
+      }
+    }
+  ]
+}</code></pre>
+                </div>
+                
+                <div class="api-endpoint">
+                    <h4><span class="method post">POST</span> /api/sessions/:id/permissions</h4>
+                    <p>Update session permissions</p>
+                    <pre><code class="language-json">// Request
+{
+  "filesystem::read_file": true,
+  "filesystem::write_file": false,
+  "github::create_issue": true
+}
+
+// Response
+{
+  "success": true,
+  "updated": 3
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- WebSocket API -->
+            <section id="websocket-api" class="docs-section">
+                <h2>WebSocket API</h2>
+                <p>Connect to <code>ws://localhost:8080/ws</code> for real-time updates:</p>
+                
+                <h3>Status Updates</h3>
+                <pre><code class="language-json">{
+  "type": "status",
+  "servers": [
+    {
+      "id": "filesystem",
+      "name": "Filesystem Server",
+      "status": "connected",
+      "error": null,
+      "tools": 5,
+      "resources": 2
+    }
+  ]
+}</code></pre>
+                
+                <h3>Session Events</h3>
+                <pre><code class="language-json">{
+  "type": "session",
+  "event": "connected",
+  "sessionId": "abc123",
+  "clientInfo": "Claude Desktop"
+}</code></pre>
+                
+                <h3>Tool Execution Events</h3>
+                <pre><code class="language-json">{
+  "type": "tool_execution",
+  "sessionId": "abc123",
+  "serverId": "filesystem",
+  "tool": "read_file",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "duration": 125,
+  "success": true
+}</code></pre>
+            </section>
+
+            <!-- System Services -->
+            <section id="system-services" class="docs-section">
+                <h2>Running as a System Service</h2>
+                
+                <h3>Linux (systemd)</h3>
+                <pre><code class="language-bash"># Install service
+sudo ./services/linux/install-service.sh
+
+# Manage service
+sudo systemctl start claudeforge
+sudo systemctl stop claudeforge
+sudo systemctl restart claudeforge
+sudo systemctl status claudeforge
+
+# View logs
+journalctl -u claudeforge -f
+
+# Enable auto-start
+sudo systemctl enable claudeforge</code></pre>
+                
+                <h3>macOS (launchd)</h3>
+                <pre><code class="language-bash"># Install service
+sudo ./services/macos/install-service.sh
+
+# Manage service
+sudo launchctl start com.claudeforge.server
+sudo launchctl stop com.claudeforge.server
+
+# View logs
+tail -f /usr/local/var/log/claudeforge/stdout.log</code></pre>
+                
+                <h3>Windows (Service)</h3>
+                <pre><code class="language-powershell"># Run as Administrator
+cd services\windows
+.\install-service.ps1
+
+# Manage service
+net start ClaudeForge
+net stop ClaudeForge
+sc query ClaudeForge</code></pre>
+            </section>
+
+            <!-- Docker -->
+            <section id="docker" class="docs-section">
+                <h2>Docker Deployment</h2>
+                
+                <h3>Dockerfile</h3>
+                <pre><code class="language-dockerfile">FROM node:18-alpine
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm ci --production
+
+# Copy source
+COPY . .
+RUN npm run build
+
+# Expose ports
+EXPOSE 3000 8080
+
+# Run
+CMD ["node", "dist/index.js"]</code></pre>
+                
+                <h3>Docker Compose</h3>
+                <pre><code class="language-yaml">version: '3.8'
+services:
+  claudeforge:
+    build: .
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    volumes:
+      - ./config.json:/app/config.json
+      - ./logs:/app/logs
+    environment:
+      - NODE_ENV=production
+      - CLAUDEFORGE_CONFIG=/app/config.json
+    restart: unless-stopped</code></pre>
+                
+                <h3>Running with Docker</h3>
+                <pre><code class="language-bash"># Build image
+docker build -t claudeforge .
+
+# Run container
+docker run -d \
+  -p 3000:3000 \
+  -p 8080:8080 \
+  -v $(pwd)/config.json:/app/config.json \
+  --name claudeforge \
+  claudeforge
+
+# View logs
+docker logs -f claudeforge</code></pre>
+            </section>
+
+            <!-- Security -->
+            <section id="security" class="docs-section">
+                <h2>Security Best Practices</h2>
+                
+                <h3>Authentication</h3>
+                <p>For production deployments, implement authentication:</p>
+                <pre><code class="language-javascript">// Example: Add basic auth middleware
+app.use('/api', (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (!auth || !verifyToken(auth)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+});</code></pre>
+                
+                <h3>TLS/SSL Configuration</h3>
+                <p>Use a reverse proxy for HTTPS:</p>
+                <pre><code class="language-nginx"># nginx configuration
+server {
+    listen 443 ssl;
+    server_name claudeforge.example.com;
+    
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+    
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+    }
+}</code></pre>
+                
+                <h3>Environment Variables</h3>
+                <p>Store sensitive data in environment variables:</p>
+                <pre><code class="language-bash"># .env file (never commit this)
+GITHUB_API_KEY=ghp_xxxxxxxxxxxx
+OPENAI_API_KEY=sk-xxxxxxxxxxxx
+CLAUDEFORGE_SECRET=random-secret-key</code></pre>
+                
+                <h3>Firewall Rules</h3>
+                <pre><code class="language-bash"># Allow only local connections
+sudo ufw allow from 127.0.0.1 to any port 3000
+sudo ufw allow from 127.0.0.1 to any port 8080
+
+# Or allow specific IPs
+sudo ufw allow from 192.168.1.0/24 to any port 8080</code></pre>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="docs-section">
+                <h2>Troubleshooting</h2>
+                
+                <h3>Common Issues</h3>
+                
+                <div class="troubleshoot-item">
+                    <h4>Server won't start</h4>
+                    <ul>
+                        <li>Check Node.js version: <code>node --version</code> (requires 18+)</li>
+                        <li>Verify config.json is valid JSON</li>
+                        <li>Check if ports 3000 and 8080 are available</li>
+                        <li>Review logs: <code>npm run dev</code> for detailed output</li>
+                    </ul>
+                </div>
+                
+                <div class="troubleshoot-item">
+                    <h4>Tools not appearing</h4>
+                    <ul>
+                        <li>Verify server is connected in web interface</li>
+                        <li>Check server logs for initialization errors</li>
+                        <li>Ensure server implements tools capability</li>
+                        <li>Review permissions in web interface</li>
+                    </ul>
+                </div>
+                
+                <div class="troubleshoot-item">
+                    <h4>Permission denied errors</h4>
+                    <ul>
+                        <li>Check default permission policy in config</li>
+                        <li>Review session permissions in web interface</li>
+                        <li>Verify tool name matches exactly</li>
+                        <li>Check server ID in tool calls</li>
+                    </ul>
+                </div>
+                
+                <div class="troubleshoot-item">
+                    <h4>Connection timeouts</h4>
+                    <ul>
+                        <li>Increase timeout in server config</li>
+                        <li>Check network connectivity</li>
+                        <li>Verify firewall rules</li>
+                        <li>Review proxy settings if applicable</li>
+                    </ul>
+                </div>
+                
+                <h3>Debug Mode</h3>
+                <pre><code class="language-bash"># Enable debug logging
+export DEBUG=claudeforge:*
+npm run dev
+
+# Or in config.json
+{
+  "debug": true,
+  "logLevel": "verbose"
+}</code></pre>
+                
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>GitHub Issues: <a href="https://github.com/jpeggdev/claudeforge/issues">Report bugs</a></li>
+                    <li>Discussions: <a href="https://github.com/jpeggdev/claudeforge/discussions">Ask questions</a></li>
+                    <li>Email: <a href="mailto:jpeggdev@gmail.com">jpeggdev@gmail.com</a></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ClaudeForge</h4>
+                    <p>MCP Server Proxy</p>
+                </div>
+                <div class="footer-section">
+                    <a href="https://github.com/jpeggdev/claudeforge">GitHub</a>
+                    <a href="/docs.html">Documentation</a>
+                    <a href="https://github.com/jpeggdev/claudeforge/issues">Issues</a>
+                </div>
+                <div class="footer-section">
+                    <a href="mailto:jpeggdev@gmail.com">Contact</a>
+                    <a href="https://github.com/jpeggdev/claudeforge/blob/main/LICENSE">License</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ClaudeForge by Jeff Pegg</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="docs-script.js"></script>
+</body>
+</html>
